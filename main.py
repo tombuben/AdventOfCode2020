@@ -65,8 +65,44 @@ def day2_2():
     print(valid)
 
 
+def day3_12():
+    input = open("day3-input.txt", "r")
+    lines = input.readlines()
+
+    numbers = set()
+
+    t1 = t2 = t3 = t4 = t5 = 0
+    x1 = x2 = x3 = x4 = x5 = 0
+    y = True
+
+    for line in lines:
+        if line[x1 % (len(line)-1)] == "#":
+            t1 += 1
+        if line[x2 % (len(line) - 1)] == "#":
+            t2 += 1
+        if line[x3 % (len(line) - 1)] == "#":
+            t3 += 1
+        if line[x4 % (len(line) - 1)] == "#":
+            t4 += 1
+        x1 += 1
+        x2 += 3
+        x3 += 5
+        x4 += 7
+
+        if y:
+            if line[x5 % (len(line) - 1)] == "#":
+                t5 += 1
+            x5 += 1
+        y = not y
+
+    print(t2)
+    print(t1 * t2 * t3 * t4 * t5)
+
+
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    day2_2()
+    day3_12()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
