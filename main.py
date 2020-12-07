@@ -281,7 +281,80 @@ def day6_2():
     print(suma)
 
 
+def day7_1():
+    input = open("day7-input.txt", "r")
+    lines = input.readlines()
+
+    bagjacency_list = {}
+    for line in lines:
+        line = line.rstrip('\n')
+        key, contents = line.split(sep=" bags contain ")
+        for sub in ["no other bags", " bags", " bag", "."]:
+            contents = contents.replace(sub, "")
+        contents = contents.split(sep=", ")
+
+        for bag_type in contents:
+            bag_split = bag_type.split()
+            if len(bag_split) == 0:
+                continue
+            count = int(bag_split[0])
+            type = " ".join(bag_split[1:])
+
+            if type not in bagjacency_list:
+                bagjacency_list[type] = set()
+            if key not in bagjacency_list:
+                bagjacency_list[key] = set()
+            bagjacency_list[type].add(key)
+
+    visited = set()
+    to_visit = ["shiny gold"]
+    while len(to_visit) > 0:
+        current = to_visit.pop()
+        visited.add(current)
+        for neighbor in bagjacency_list[current]:
+            if neighbor not in visited:
+                to_visit.append(neighbor)
+
+    print(len(visited)-1)
+
+
+
+def day7_2():
+    input = open("day7-input.txt", "r")
+    lines = input.readlines()
+
+    bagjacency_list = {}
+    for line in lines:
+        line = line.rstrip('\n')
+        key, contents = line.split(sep=" bags contain ")
+        for sub in ["no other bags", " bags", " bag", "."]:
+            contents = contents.replace(sub, "")
+        contents = contents.split(sep=", ")
+
+        if key not in bagjacency_list:
+            bagjacency_list[key] = set()
+
+        for bag_type in contents:
+            bag_split = bag_type.split()
+            if len(bag_split) == 0:
+                continue
+            count = int(bag_split[0])
+            type = " ".join(bag_split[1:])
+
+            if type not in bagjacency_list:
+                bagjacency_list[type] = set()
+            bagjacency_list[key].add((type, count))
+
+    def visit(to_visit, count):
+        if len(bagjacency_list[to_visit]) == 0:
+            return count
+        sum = 0
+        for neighbor, i in bagjacency_list[to_visit]:
+            sum += visit(neighbor, i)
+        return sum * count + count
+
+    print(visit("shiny gold", 1) - 1)
 
 
 if __name__ == '__main__':
-    day6_2()
+    day7_2()
