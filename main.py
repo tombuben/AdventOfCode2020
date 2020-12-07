@@ -184,6 +184,58 @@ def day4_2():
             d[key] = value
     print(valid)
 
+def day5_1():
+    input = open("day5-input.txt", "r")
+    lines = input.readlines()
+
+    max_id = 0
+    for line in lines:
+        row_code = line[0:7]
+        col_code = line[7:10]
+
+        row_bytes = row_code.replace("F", "0").replace("B", "1")
+        row_num = int(row_bytes, base=2)
+
+        col_bytes = col_code.replace("L", "0").replace("R", "1")
+        col_num = int(col_bytes, base=2)
+
+        seat_id = row_num * 8 + col_num
+        max_id = max(max_id, seat_id)
+
+    print(max_id)
+
+
+def day5_1():
+    input = open("day5-input.txt", "r")
+    lines = input.readlines()
+
+    s = set()
+    p = set()
+    for line in lines:
+        row_code = line[0:7]
+        col_code = line[7:10]
+
+        row_bytes = row_code.replace("F", "0").replace("B", "1")
+        row_num = int(row_bytes, base=2)
+
+        col_bytes = col_code.replace("L", "0").replace("R", "1")
+        col_num = int(col_bytes, base=2)
+
+        seat_id = row_num * 8 + col_num
+        s.add(seat_id)
+
+        if seat_id in p:
+            p.remove(seat_id)
+        if seat_id + 1 not in s and seat_id + 2 in s:
+            p.add(seat_id + 1)
+        if seat_id - 1 not in s and seat_id - 2 in s:
+            p.add(seat_id - 1)
+
+    print(p)
+
+
+
+
 
 if __name__ == '__main__':
-    day4_2()
+    day5_1()
