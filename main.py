@@ -205,7 +205,7 @@ def day5_1():
     print(max_id)
 
 
-def day5_1():
+def day5_2():
     input = open("day5-input.txt", "r")
     lines = input.readlines()
 
@@ -234,8 +234,54 @@ def day5_1():
     print(p)
 
 
+def day6_1():
+    input = open("day6-input.txt", "r")
+    lines = input.readlines()
+
+    suma = 0
+    s = set()
+    for line in lines:
+        line = line.rstrip('\n')
+        if line == "":
+            suma += len(s)
+            s = set()
+
+        for letter in line:
+            s.add(letter)
+
+    print(suma)
+
+
+def day6_2():
+    input = open("day6-input.txt", "r")
+    lines = input.readlines()
+
+    suma = 0
+    s = set()
+    first = True
+    for line in lines:
+        line = line.rstrip('\n')
+        if line == "":
+            suma += len(s)
+            s = set()
+            first = True
+            continue
+
+        user_set = set()
+        for letter in line:
+            user_set.add(letter)
+
+        if first:
+            first = False
+            s = user_set
+            continue
+        else:
+            s = s.intersection(user_set)
+
+    print(suma)
+
 
 
 
 if __name__ == '__main__':
-    day5_1()
+    day6_2()
